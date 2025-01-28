@@ -56,6 +56,9 @@ public class ChessPiece {
         switch (getPieceType()) {
             case BISHOP -> piece = new BishopMovesCalculator();
             case ROOK -> piece = new RookMovesCalculator();
+            case QUEEN -> piece = new QueenMovesCalculator();
+            case KING -> piece = new KingMovesCalculator();
+            case KNIGHT -> piece = new KnightMovesCalculator();
             default -> new ArrayList<ChessMove>();
         }
         return piece.pieceMoves(board, myPosition);

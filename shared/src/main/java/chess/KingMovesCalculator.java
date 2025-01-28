@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class BishopMovesCalculator implements PieceMovesCalculator{
+public class KingMovesCalculator implements PieceMovesCalculator{
     ChessBoard chessboard;
     ChessPosition startPosition;
     List<ChessMove> moves = new ArrayList<>();
@@ -16,50 +16,55 @@ public class BishopMovesCalculator implements PieceMovesCalculator{
         int row;
         int col;
 
-        //check up right (row+1, col+1)
+        //check up
         row = startPosition.getRow();
         col = startPosition.getColumn();
-        while (row+1<9 && col+1<9){
-            if (checkNAdd(row+1, col+1)) {
-                row++;
-                col++;
-            } else {
-                break;
-            }
+        if (row+1<9) {
+            checkNAdd(row+1, col);
         }
-        //check down right (row-1, col+1)
+        //check up right
         row = startPosition.getRow();
         col = startPosition.getColumn();
-        while (row-1>0 && col+1<9) {
-            if (checkNAdd(row-1, col+1)) {
-                row--;
-                col++;
-            } else {
-                break;
-            }
+        if (row+1<9 && col+1<9) {
+            checkNAdd(row+1, col+1);
         }
-        //check down left (row-1, col-1)
+        //check right
         row = startPosition.getRow();
         col = startPosition.getColumn();
-        while (row-1>0 && col-1>0) {
-            if (checkNAdd(row-1, col-1)) {
-                row--;
-                col--;
-            } else {
-                break;
-            }
+        if (col+1<9) {
+            checkNAdd(row, col+1);
         }
-        //check up left (row+1, col-1)
+        //check down right
         row = startPosition.getRow();
         col = startPosition.getColumn();
-        while (row+1<9 && col-1>0) {
-            if (checkNAdd(row+1, col-1)) {
-                row++;
-                col--;
-            } else {
-                break;
-            }
+        if (row-1>0 && col+1<9) {
+            checkNAdd(row-1, col+1);
         }
+        //check down
+        row = startPosition.getRow();
+        col = startPosition.getColumn();
+        if (row-1>0) {
+            checkNAdd(row-1, col);
+        }
+        //check down left
+        row = startPosition.getRow();
+        col = startPosition.getColumn();
+        if (row-1>0 && col-1>0) {
+            checkNAdd(row-1, col-1);
+        }
+        //check left
+        row = startPosition.getRow();
+        col = startPosition.getColumn();
+        if (col-1>0) {
+            checkNAdd(row, col-1);
+        }
+        //check up left
+        row = startPosition.getRow();
+        col = startPosition.getColumn();
+        if (row+1<9 && col-1>0) {
+            checkNAdd(row+1, col-1);
+        }
+
         return moves;
     }
 
