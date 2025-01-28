@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Arrays;
+
 /**
  * A chessboard that can hold and rearrange chess pieces.
  * <p>
@@ -7,9 +9,10 @@ package chess;
  * signature of the existing methods.
  */
 public class ChessBoard {
+    ChessPiece [][] squares;
 
     public ChessBoard() {
-        
+        squares = new ChessPiece[9][9];
     }
 
     /**
@@ -19,7 +22,7 @@ public class ChessBoard {
      * @param piece    the piece to add
      */
     public void addPiece(ChessPosition position, ChessPiece piece) {
-        throw new RuntimeException("Not implemented");
+        squares[position.getRow()][position.getColumn()] = piece;
     }
 
     /**
@@ -30,7 +33,7 @@ public class ChessBoard {
      * position
      */
     public ChessPiece getPiece(ChessPosition position) {
-        throw new RuntimeException("Not implemented");
+        return squares[position.getRow()][position.getColumn()];
     }
 
     /**
@@ -38,6 +41,83 @@ public class ChessBoard {
      * (How the game of chess normally starts)
      */
     public void resetBoard() {
-        throw new RuntimeException("Not implemented");
+        squares = new ChessPiece[9][9];
+
+    }
+
+    @Override
+    public String toString() {
+        String boardString = "ChessBoard: \n";
+
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++) {
+                if (squares[i][j] == null) {
+                    boardString = boardString.concat(" ");
+                } else {
+                    switch (squares[i][j].getTeamColor()) {
+                        case WHITE -> {
+                            switch (squares[i][j].getPieceType()) {
+                                case ROOK -> boardString = boardString.concat("R");
+                                case KNIGHT -> boardString = boardString.concat("N");
+                                case BISHOP -> boardString = boardString.concat("B");
+                                case QUEEN -> boardString = boardString.concat("Q");
+                                case KING -> boardString = boardString.concat("K");
+                                case PAWN -> boardString = boardString.concat("P");
+                            }
+                        }
+                        case BLACK -> {
+                            switch (squares[i][j].getPieceType()) {
+                                case ROOK -> boardString = boardString.concat("r");
+                                case KNIGHT -> boardString = boardString.concat("n");
+                                case BISHOP -> boardString = boardString.concat("b");
+                                case QUEEN -> boardString = boardString.concat("q");
+                                case KING -> boardString = boardString.concat("k");
+                                case PAWN -> boardString = boardString.concat("p");
+                            }
+                        }
+                    }
+                }
+                boardString = boardString.concat("|");
+            }
+            boardString = boardString.concat("\n");
+        }
+
+        return "ChessBoard{" +
+                "squares=" + Arrays.toString(squares) +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        ChessBoard that = (ChessBoard) o;
+
+        for (int i = 1; i < 9; i++) {
+            for (int j = 1; j < 9; j++) {
+                if (squares[i][j] == null || that.squares[i][j] == null) {
+                    if (squares[i][j] == that.squares[i][j]){
+                        break;
+                    } else {
+                        return false;
+                    }
+                } else if (squares[i][j].getTeamColor() != that.squares[i][j].getTeamColor()) {
+                    return false;
+                } else if (squares[i][j].getPieceType() != that.squares[i][j].getPieceType()) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(squares);
     }
 }
